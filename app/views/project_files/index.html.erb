@@ -1,0 +1,61 @@
+<h2><%= l(:label_project_files) %></h2>
+<p><%= l(:text_project_files_access) %></p>
+<%= form_tag project_file_catalogue_path, :method => :get do %>
+  <fieldset><legend><%= l(:label_filter_plural) %></legend>
+    <p><label for="project_id"><%= l(:label_project) %></label>
+    <%= select_tag :project_id, options_from_collection_for_select(@projects, :id, :name, @filters[:project_id]), :include_blank => l(:label_all) %>
+    <label for="issue_id"><%= l(:label_issue) %> #</label>
+    <%= number_field_tag :issue_id, @filters[:issue_id], :min => 1, :size => 8 %></p>
+    <p><label for="author_id"><%= l(:field_author) %></label>
+    <%= select_tag :author_id, options_from_collection_for_select(@authors, :id, :name, @filters[:author_id]), :include_blank => l(:label_all) %>
+    <label for="group_id"><%= l(:label_group) %></label>
+    <%= select_tag :group_id, options_from_collection_for_select(@groups, :id, :name, @filters[:group_id]), :include_blank => l(:label_all) %>
+    <label for="role_id"><%= l(:label_role) %></label>
+    <%= select_tag :role_id, options_from_collection_for_select(@roles, :id, :name, @filters[:role_id]), :include_blank => l(:label_all) %></p>
+    <%= submit_tag l(:button_apply), :name => nil %>
+    <%= link_to l(:button_clear), project_file_catalogue_path %>
+  </fieldset>
+<% end %>
+<p><%= l(:label_total) %>: <%= @attachment_count %>. <%= l(:text_project_files_limits) %></p>
+<%= form_tag archive_project_files_path do %>
+  <% @filters.each do |key, value| %><%= hidden_field_tag key, value %><% end %>
+  <div class="autoscroll">
+    <table class="list">
+      <thead><tr>
+        <th><%= check_box_tag 'select_page', '1', false, :id => 'project-files-select-page', :title => l(:label_project_files_select_page) %></th>
+        <th><%= l(:field_filename) %></th><th><%= l(:label_project) %></th><th><%= l(:label_project_files_container) %></th>
+        <th><%= l(:field_author) %></th><th><%= l(:field_filesize) %></th><th><%= l(:field_created_on) %></th>
+      </tr></thead>
+      <tbody>
+      <% @attachments.each do |attachment| %>
+        <tr class="<%= cycle('odd', 'even') %>">
+          <td><%= check_box_tag 'attachment_ids[]', attachment.id, false, :class => 'project-file-selection', :title => attachment.filename %></td>
+          <td><%= link_to attachment.filename, download_project_file_path(attachment.id) %><br><%= attachment.description %></td>
+          <td><%= attachment.project.name %></td>
+          <td><% if attachment.container_type == 'Issue' %>
+            #<%= attachment.container_id %>: <%= attachment.container.subject %>
+          <% else %>
+            <%= attachment.container_type %>: <%= attachment.container.try(:title) || attachment.container.try(:name) %>
+          <% end %></td>
+          <td><%= attachment.author.name %></td><td><%= number_to_human_size attachment.filesize %></td><td><%= format_time attachment.created_on %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% if @attachments.empty? %><p class="nodata"><%= l(:label_no_data) %></p><% end %>
+  <%= submit_tag l(:button_project_files_download_selected), :name => 'selected' %>
+  <%= button_tag l(:button_project_files_download_all), :name => 'all_filtered', :value => '1', :type => 'submit' %>
+<% end %>
+<p class="pagination">
+  <% if @page > 1 %><%= link_to '←', project_file_catalogue_path(@filters.merge(:page => @page - 1)) %><% end %>
+  <%= @page %> / <%= @pages %>
+  <% if @page < @pages %><%= link_to '→', project_file_catalogue_path(@filters.merge(:page => @page + 1)) %><% end %>
+</p>
+<%= javascript_tag do %>
+  document.getElementById('project-files-select-page').addEventListener('change', function () {
+    var boxes = document.querySelectorAll('.project-file-selection');
+    for (var i = 0; i < boxes.length; i++) { boxes[i].checked = this.checked; }
+  });
+<% end %>
+<% html_title l(:label_project_files) %>

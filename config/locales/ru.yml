@@ -1,0 +1,13 @@
+ru:
+  label_project_files: "Все файлы проектов"
+  project_module_project_files: "Каталог файлов"
+  permission_download_project_files: "Просмотр каталога и скачивание доступных вложений"
+  permission_download_all_project_files: "Скачивание ВСЕХ вложений проекта (включая закрытые задачи)"
+  label_project_files_select_page: "Выбрать файлы на этой странице"
+  label_project_files_container: "Задача / источник"
+  button_project_files_download_selected: "Скачать выбранные ZIP"
+  button_project_files_download_all: "Скачать все по фильтру ZIP"
+  text_project_files_access: "Видимость зависит от прав вашей роли. Группа — текущая группа автора; роль — текущая роль автора в проекте файла."
+  text_project_files_limits: "В одном ZIP — до 500 файлов и 512 МиБ. Выбор флажками действует на текущей странице; кнопка «все по фильтру» — на всех страницах."
+  error_project_files_limit: "Превышен лимит ZIP: 500 файлов или 512 МиБ. Уточните фильтры."
+  error_project_files_empty: "Выберите файлы для скачивания."

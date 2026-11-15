@@ -1,0 +1,13 @@
+en:
+  label_project_files: "Project files"
+  project_module_project_files: "File catalogue"
+  permission_download_project_files: "Browse and download visible attachments"
+  permission_download_all_project_files: "Download ALL project attachments (including private issues)"
+  label_project_files_select_page: "Select files on this page"
+  label_project_files_container: "Issue / source"
+  button_project_files_download_selected: "Download selected ZIP"
+  button_project_files_download_all: "Download all filtered ZIP"
+  text_project_files_access: "Visibility follows role permissions. Group means the author's current group; role means the author's current role in the file's project."
+  text_project_files_limits: "ZIP limit: 500 files, 512 MiB. Checkboxes select this page; all filtered includes all pages."
+  error_project_files_limit: "ZIP limit exceeded: 500 files or 512 MiB. Narrow the filters."
+  error_project_files_empty: "Select files to download."
