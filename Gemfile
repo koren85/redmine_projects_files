@@ -1,1 +1,1 @@
-gem 'rubyzip', '~> 2.3.2'
+gem 'rubyzip'

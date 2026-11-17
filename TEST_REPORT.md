@@ -16,7 +16,7 @@
 Запуск из корня Redmine:
 
 ```
-RAILS_ENV=production bundle exec rails runner plugins/redmine_project_files/test/integration.rb
+RAILS_ENV=production bundle exec rails runner plugins/redmine_projects_files/test/integration.rb
 ```
 
 Последний запуск выполнен под пользователем процесса Redmine (`redmine`),

@@ -1,5 +1,5 @@
 # Run on a disposable Redmine/PostgreSQL database with default data loaded:
-# RAILS_ENV=production bundle exec rails runner plugins/redmine_project_files/test/integration.rb
+# RAILS_ENV=production bundle exec rails runner plugins/redmine_projects_files/test/integration.rb
 require 'minitest/autorun'
 require 'action_dispatch/testing/integration'
 require 'stringio'

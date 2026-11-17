@@ -21,14 +21,17 @@ PostgreSQL 13.23. Требуется Ruby >= 2.4 (rubyzip 2.3.2).
 1. Из корня Redmine установите плагин через Git:
 
    ```sh
-   git clone https://github.com/koren85/redmine_projects_files.git plugins/redmine_project_files
+   git clone https://github.com/koren85/redmine_projects_files.git plugins/redmine_projects_files
    ```
 
-   Либо распакуйте папку `redmine_project_files` в `REDMINE_ROOT/plugins/`.
+   Либо распакуйте папку `redmine_projects_files` в `REDMINE_ROOT/plugins/`.
    Название папки должно совпадать с указанным. Проверьте, что пользователь
    процесса Redmine может читать файлы и проходить по каталогам.
 2. В корне Redmine выполните `bundle install` с обычными параметрами вашего
-   приложения. Добавляется только зависимость `rubyzip ~> 2.3.2`.
+   приложения. Добавляется только зависимость `rubyzip` — без версии, чтобы
+   не конфликтовать с другими плагинами, которые тоже подключают `rubyzip`
+   (например, конвертер zippy в `redmine_more_previews`): Bundler не допускает
+   один гем с разными требованиями к версии. Проверено на rubyzip 2.3.2.
 3. Перезапустите Redmine. Миграции плагину не требуются.
 4. В настройках нужных проектов включите модуль **Каталог файлов**.
 5. В **Администрирование → Роли и права доступа** настройте права роли:
@@ -52,7 +55,7 @@ bind mount. `docker cp` без изменения образа/тома поте
 
 ```dockerfile
 FROM redmine:4.1.7
-COPY --chown=redmine:redmine redmine_project_files /usr/src/redmine/plugins/redmine_project_files
+COPY --chown=redmine:redmine redmine_projects_files /usr/src/redmine/plugins/redmine_projects_files
 RUN bundle install --without development test
 ```
 
@@ -90,7 +93,7 @@ docker compose -p project-files-check -f integration/compose.yml exec -e RAILS_E
 Только в отдельном стенде можно создать демонстрационный проект и пользователя:
 
 ```sh
-docker compose -p project-files-check -f integration/compose.yml exec -e RAILS_ENV=production redmine bundle exec rails runner plugins/redmine_project_files/integration/demo.rb
+docker compose -p project-files-check -f integration/compose.yml exec -e RAILS_ENV=production redmine bundle exec rails runner plugins/redmine_projects_files/integration/demo.rb
 ```
 
 Демонстрационный вход: `files_demo` / `Demo-files-41!`.
@@ -99,7 +102,7 @@ docker compose -p project-files-check -f integration/compose.yml exec -e RAILS_E
 стандартными справочниками Redmine:
 
 ```sh
-docker compose -p project-files-check -f integration/compose.yml exec -e RAILS_ENV=production redmine bundle exec rails runner plugins/redmine_project_files/test/integration.rb
+docker compose -p project-files-check -f integration/compose.yml exec -e RAILS_ENV=production redmine bundle exec rails runner plugins/redmine_projects_files/test/integration.rb
 ```
 
 Тесты создают данные в транзакциях и откатывают их; отправка почты отключена.

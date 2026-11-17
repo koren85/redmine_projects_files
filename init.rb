@@ -1,4 +1,4 @@
-Redmine::Plugin.register :redmine_project_files do
+Redmine::Plugin.register :redmine_projects_files do
   name 'Project Files'
   author 'Project Files contributors'
   description 'A permission-controlled attachment catalogue and ZIP downloads'
